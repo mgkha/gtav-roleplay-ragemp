@@ -1,0 +1,26 @@
+# node modules
+node_modules
+
+# compiled files
+packages/
+client_packages/
+
+# test coverage
+coverage/
+
+# log files
+logs/
+
+# environment variables, never commit this file
+.env
+
+# ragemp files and folders
+bin/
+dotnet/
+maps/
+plugins/
+BugTrap-x64.dll
+conf.json
+linux_x64.tar.gz
+ragemp-server.exe
+conf.json
