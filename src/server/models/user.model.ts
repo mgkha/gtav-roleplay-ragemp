@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
 export interface User extends mongoose.Document {
-  comparePassword(password: string): Boolean;
+  comparePassword(password: string): boolean;
 
   name: string;
   age: number;
@@ -27,9 +27,9 @@ UserSchema.pre('save', function (this: User): void {
   this.password = bcrypt.hashSync(this.password, 10);
 });
 
-UserSchema.methods.comparePassword = function (password: String): Boolean {
-  return bcrypt.compareSync(password, this.password)
-}
+UserSchema.methods.comparePassword = function (password: string): boolean {
+  return bcrypt.compareSync(password, this.password);
+};
 
 const User = mongoose.model<User>('User', UserSchema);
 export default User;
