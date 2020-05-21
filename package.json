@@ -14,7 +14,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "tsc --noEmit && npm run lint"
+      "pre-push": "cd src/server/ && tsc --noEmit && cd ../client/ && tsc --noEmit && npm run lint"
     }
   },
   "author": "kgkg",
