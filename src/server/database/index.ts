@@ -7,7 +7,7 @@ const databaseLoader = async (): Promise<void> => {
     return;
   }
 
-  mongoose.connect(process.env.DATABASE as string, { useNewUrlParser: true, useFindAndModify: false }).then((): void => {
+  mongoose.connect(process.env.DATABASE as string, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true }).then((): void => {
     logger('database', 'Database connected successfully.', 'info');
   }).catch((): void => {
     logger('database', 'Could not connnect to database.', 'error');

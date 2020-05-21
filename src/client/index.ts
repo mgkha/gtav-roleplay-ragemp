@@ -11,6 +11,7 @@ import 'lib/spot';
 /**
  * Modules
  */
+import 'modules/authentication';
 import 'modules/player';
 
 mp.events.call('clientLaunched');

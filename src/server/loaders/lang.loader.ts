@@ -3,6 +3,7 @@ import logger from '../utils/logger.util';
 
 // languages
 import en from '../lang/en';
+import mm from '../lang/mm';
 
 const languageLoader = (): void => {
   try {
@@ -10,6 +11,7 @@ const languageLoader = (): void => {
       lng: process.env.LANGUAGE,
       resources: {
         en,
+        mm
       }
     });
     logger('loaders', 'Loaded languages successfully!', 'info');

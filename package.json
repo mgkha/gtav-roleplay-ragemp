@@ -19,7 +19,6 @@
   },
   "author": "kgkg",
   "devDependencies": {
-    "@types/bcrypt": "^3.0.0",
     "@types/dotenv": "^6.1.1",
     "@types/glob": "^7.1.1",
     "@types/mongoose": "^5.5.12",
@@ -36,10 +35,18 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "@types/bcrypt": "^3.0.0",
+    "bcrypt": "^4.0.1",
     "dotenv": "^8.0.0",
     "i18next": "^17.0.11",
     "log4js": "^5.0.0",
     "mongoose": "^5.7.5"
+  },
+  "nodemonConfig": {
+    "delay": "1000",
+    "watch": [
+      "client_packages",
+      "packages"
+    ]
   }
 }
