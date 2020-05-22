@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import mongoose from 'mongoose';
 
 export interface User extends mongoose.Document {
@@ -24,11 +24,11 @@ export const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre('save', function (this: User): void {
-  this.password = bcrypt.hashSync(this.password, 10);
+  this.password = bcryptjs.hashSync(this.password, 10);
 });
 
 UserSchema.methods.comparePassword = function (password: string): boolean {
-  return bcrypt.compareSync(password, this.password);
+  return bcryptjs.compareSync(password, this.password);
 };
 
 const User = mongoose.model<User>('User', UserSchema);
