@@ -22,7 +22,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-undef": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
     "indent": "off",
     "@typescript-eslint/indent": [
       "error",

@@ -11,11 +11,12 @@
     "build-client": "cd src/client && tsc && npm run copy-client",
     "build": "npm run clean && npm run build-server && npm run build-client",
     "lint": "eslint . --ext .ts",
+    "type-check": "cd src/server/ && tsc --noEmit && cd ../client/ && tsc --noEmit",
     "copy-client": "ncp src/client/modules/authentication/form client_packages/modules/authentication/form"
   },
   "husky": {
     "hooks": {
-      "pre-push": "cd src/server/ && tsc --noEmit && cd ../client/ && tsc --noEmit && npm run lint"
+      "pre-push": "npm run type-check && npm run lint"
     }
   },
   "author": "kgkg",
@@ -38,7 +39,6 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "copyfiles": "^2.2.0",
     "dotenv": "^8.0.0",
     "i18next": "^17.0.11",
     "log4js": "^5.0.0",
@@ -50,6 +50,10 @@
     "watch": [
       "client_packages",
       "packages"
+    ],
+    "exec": "npm run copy-client && ragemp-server.exe",
+    "ignore": [
+      "client_packages/modules/authentication/form/*"
     ]
   }
 }

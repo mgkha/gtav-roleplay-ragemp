@@ -1,30 +1,19 @@
 import { hideHudElements } from 'utils/hud';
-import { playerInteractionMenu } from 'modules/menu';
+import { registerVehicle } from 'modules/player/vehicles';
+import { registerKeyBinding } from 'modules/keymanager';
+import { sendHelpMessage } from 'utils/ui';
 
-function bindKeys(): void {
-  mp.keys.bind(0x42, true, function() { //B Key
-    mp.players.local.freezePosition(false);
-    mp.players.local.setAlpha(255);
-    mp.gui.chat.activate(true);
-    mp.game.ui.displayRadar(true);
-    mp.gui.cursor.show(false, false);
-  });
-  
-  mp.keys.bind(0x4D, true, function() { //M Key
-    if(playerInteractionMenu.Visible) { playerInteractionMenu.Close(); } else { playerInteractionMenu.Open(); }
-  });
-}
+let lastVehicle: VehicleMp;
 
 mp.events.add('clientLaunched', (): void => {
   hideHudElements([1, 3]);
   mp.discord.update('GTAV Roleplay', 'A Developer');
-  mp.game.vehicle.defaultEngineBehaviour = false;
   mp.gui.chat.push('Please login to enter the world!');
   mp.events.call('authenticate');
+  // mp.events.call('authenticated');
 });
 
 mp.events.add('authenticated', (): void => {
-  mp.players.local.position = new mp.Vector3(100, 100, 80);
   //enable player
   mp.players.local.freezePosition(false);
   mp.players.local.setAlpha(255);
@@ -32,24 +21,72 @@ mp.events.add('authenticated', (): void => {
   mp.game.ui.displayRadar(true);
   mp.gui.cursor.show(false, false);
 
-  mp.events.callRemote('playerSpawn');
-  bindKeys();
+  mp.events.callRemote('playerLogin');
+  registerKeyBinding();
 });
 
 mp.events.add('playerReady', () => {
   mp.gui.chat.push('I am Ready!');
 });
 
-
-
-mp.events.add(RageEnums.EventKey.RENDER, () => {
-  const location = `${Math.round(mp.players.local.position.x)} ${Math.round(mp.players.local.position.y)} ${Math.round(mp.players.local.position.z)}`;
-  mp.game.graphics.drawText(location, [0.05, 0.005], {
-    font: 2,
-    centre: false,
-    color: [255, 255, 255, 255],
-    scale: [0.8, 0.8], 
-    outline: false
-  });
+mp.events.add('IncomingDamage', () => {
+  mp.gui.chat.push('IncomingDamage');
 });
 
+mp.events.add('playerEnterVehicle', (vehicle: VehicleMp) => {
+  mp.gui.chat.push('playerEnterVehicle');
+  lastVehicle = vehicle;
+  registerVehicle(vehicle);
+  sendHelpMessage('Press ~g~Home ~w~button to start engine');
+});
+
+mp.events.add(RageEnums.EventKey.RENDER, () => { // eslint-disable-line
+  const location = `${Math.round(mp.players.local.position.x)} ${Math.round(mp.players.local.position.y)} ${Math.round(mp.players.local.position.z)}`;
+  mp.game.graphics.drawText(location, [0.8, 0.005], {
+    font: 0,
+    centre: false,
+    color: [255, 255, 255, 255],
+    scale: [0.8, 0.8],
+    outline: false
+  });
+
+  if(lastVehicle) {
+    mp.game.graphics.drawText(`Engine Health - ${lastVehicle.getEngineHealth().toString()}`, [0.5, 0.005], {
+      font: 0,
+      centre: false,
+      color: [255, 255, 255, 255],
+      scale: [0.6, 0.6],
+      outline: false
+    });
+    mp.game.graphics.drawText(`Vehicle Armor - ${lastVehicle.getBodyHealth().toString()}`, [0.5, 0.05], {
+      font: 0,
+      centre: false,
+      color: [255, 255, 255, 255],
+      scale: [0.6, 0.6],
+      outline: false
+    });
+
+    mp.game.graphics.drawText(`Acceleration - ${lastVehicle.getAcceleration().toString()}`, [0.5, 0.095], {
+      font: 0,
+      centre: false,
+      color: [255, 255, 255, 255],
+      scale: [0.6, 0.6],
+      outline: false
+    });
+    mp.game.graphics.drawText(`RPM - ${lastVehicle.rpm.toString()}`, [0.5, 0.14], {
+      font: 0,
+      centre: false,
+      color: [255, 255, 255, 255],
+      scale: [0.6, 0.6],
+      outline: false
+    });
+    mp.game.graphics.drawText(`Speed - ${lastVehicle.getSpeed().toString()}`, [0.5, 0.185], {
+      font: 0,
+      centre: false,
+      color: [255, 255, 255, 255],
+      scale: [0.6, 0.6],
+      outline: false
+    });
+  }
+
+});

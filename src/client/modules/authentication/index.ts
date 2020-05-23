@@ -6,7 +6,7 @@ mp.events.add('authenticate', () => {
   browser.active = true;
 
   setTimeout(() => {
-    mp.players.local.position = new mp.Vector3(100, 100, 500);
+    mp.players.local.position = new mp.Vector3(550, 800, 400);
 
     //disable player
     mp.players.local.freezePosition(true);
@@ -14,11 +14,7 @@ mp.events.add('authenticate', () => {
     mp.gui.chat.activate(false);
     mp.game.ui.displayRadar(false);
     mp.gui.cursor.show(true, true);
-
-    //unbind keys
-    for (let i = 0x41; i < 0x5A; i++) {
-      mp.keys.unbind(i, true);
-    }
+    
   }, 1);
 });
 
