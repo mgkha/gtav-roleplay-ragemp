@@ -1,5 +1,4 @@
-// import { PedHashes } from './peds';
-const PedHashes = require('./peds');
+import peds_list from '../../objects/peds.json';
 
 mp.events.add('spawn_vehicle', (player: PlayerMp) => {
   const vehicle = mp.vehicles.new(mp.joaat('police3'), new mp.Vector3(player.position.x + 3, player.position.y + 3, player.position.z + 3));
@@ -7,7 +6,7 @@ mp.events.add('spawn_vehicle', (player: PlayerMp) => {
   player.call('spawn_vehicle', [vehicle]);
 });
 
-const peds = Object.keys(PedHashes);
+const peds = Object.keys(peds_list);
 let i = 0;
 mp.events.add('change_next_ped', (player: PlayerMp) => {
   i++;

@@ -26,7 +26,7 @@ export const turnOnEngine = (vehicle: VehicleMp): void => {
     if(!vh) { return; }
     vh[1] = true;
     
-    mp.game.graphics.notify('Press ~g~End ~w~button to start engine');
+    mp.game.graphics.notify('Press ~g~End ~w~button to stop engine');
     
   }, 1500);
 };
@@ -38,7 +38,7 @@ export const turnOffEngine = (vehicle: VehicleMp): void => {
       if(!vh) { return; }
       vh[1] = false;
       
-      mp.game.graphics.notify('Press ~g~Home ~w~button to stop engine');
+      mp.game.graphics.notify('Press ~g~Home ~w~button to start engine');
     }, 500);
   }
   else {

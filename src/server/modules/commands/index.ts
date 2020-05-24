@@ -7,7 +7,7 @@ mp.events.addCommand('kill', (player: PlayerMp) => {
 });
 
 mp.events.addCommand('car', (player: PlayerMp, text: string) => {
-  const vehicle = mp.vehicles.new(mp.joaat(text), new mp.Vector3(player.position.x + 1.5, player.position.y , player.position.z ));
+  const vehicle = mp.vehicles.new(mp.joaat(text), new mp.Vector3(player.position.x + 3, player.position.y + 3, player.position.z + 3));
   vehicle.numberPlate = 'EE-3784';
   player.call('spawn_vehicle', [vehicle]);
 });

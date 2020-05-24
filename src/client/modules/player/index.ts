@@ -35,7 +35,7 @@ mp.events.add('IncomingDamage', () => {
 mp.events.add('playerEnterVehicle', (vehicle: VehicleMp) => {
   lastVehicle = vehicle;
   registerVehicle(vehicle);
-  mp.game.graphics.notify('Press ~g~Home ~w~button to stop engine');
+  mp.game.graphics.notify('Press ~g~Home ~w~button to start engine');
 });
 
 mp.events.add(RageEnums.EventKey.RENDER, () => { 
