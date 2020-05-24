@@ -1,7 +1,6 @@
 import { hideHudElements } from 'utils/hud';
 import { registerVehicle } from 'modules/player/vehicles';
-import { registerKeyBinding } from 'modules/keymanager';
-import { sendHelpMessage } from 'utils/ui';
+import { BindAllKeys } from 'modules/keymanager';
 
 let lastVehicle: VehicleMp;
 
@@ -9,8 +8,8 @@ mp.events.add('clientLaunched', (): void => {
   hideHudElements([1, 3]);
   mp.discord.update('GTAV Roleplay', 'A Developer');
   mp.gui.chat.push('Please login to enter the world!');
-  mp.events.call('authenticate');
-  // mp.events.call('authenticated');
+  // mp.events.call('authenticate');
+  mp.events.call('authenticated');
 });
 
 mp.events.add('authenticated', (): void => {
@@ -22,7 +21,7 @@ mp.events.add('authenticated', (): void => {
   mp.gui.cursor.show(false, false);
 
   mp.events.callRemote('playerLogin');
-  registerKeyBinding();
+  BindAllKeys();
 });
 
 mp.events.add('playerReady', () => {
@@ -34,10 +33,9 @@ mp.events.add('IncomingDamage', () => {
 });
 
 mp.events.add('playerEnterVehicle', (vehicle: VehicleMp) => {
-  mp.gui.chat.push('playerEnterVehicle');
   lastVehicle = vehicle;
   registerVehicle(vehicle);
-  sendHelpMessage('Press ~g~Home ~w~button to start engine');
+  mp.game.graphics.notify('Press ~g~Home ~w~button to stop engine');
 });
 
 mp.events.add(RageEnums.EventKey.RENDER, () => { // eslint-disable-line

@@ -10,23 +10,17 @@ mp.events.add('playerReady', (player: PlayerMp) => {
 });
 
 mp.events.add('playerLogin', (player: PlayerMp) => {
-  mp.world.time.set(23, 59, 59);
-  mp.world.setWeatherTransition('THUNDER');
-
   player.position = new mp.Vector3(100, 100, 80);
   //change naked
-  player.setClothes(RageEnums.ClothesComponent.TORSO, 15, 0, 0); // eslint-disable-line
-  player.setClothes(RageEnums.ClothesComponent.ACCESSORIES_1, 15, 0, 0); // eslint-disable-line
-  player.setClothes(RageEnums.ClothesComponent.DECALS, 15, 0, 0); // eslint-disable-line
+  // player.setClothes(RageEnums.ClothesComponent.TORSO, 15, 0, 0); // eslint-disable-line
+  // player.setClothes(RageEnums.ClothesComponent.ACCESSORIES_1, 15, 0, 0); // eslint-disable-line
+  // player.setClothes(RageEnums.ClothesComponent.DECALS, 15, 0, 0); // eslint-disable-line
 
-  player.setClothes(RageEnums.ClothesComponent.LEGS, 21, 0, 0); // eslint-disable-line
-  player.setClothes(RageEnums.ClothesComponent.FOOT, 34, 0, 0); // eslint-disable-line
+  // player.setClothes(RageEnums.ClothesComponent.LEGS, 21, 0, 0); // eslint-disable-line
+  // player.setClothes(RageEnums.ClothesComponent.FOOT, 34, 0, 0); // eslint-disable-line
+  
+  player.model = mp.joaat('s_f_y_cop_01');
 
-  setTimeout(() => {
-    const car: VehicleMp = mp.vehicles.new(0xE644E480, new mp.Vector3(player.position.x + 2, player.position.y, player.position.z));
-    car.numberPlate = 'EE-3784';
-    console.log(`Vehicle - ${car.id} has spawned!`);
-  }, 2000);
 });
 
 mp.events.add('playerSpawn', (player: PlayerMp) => {

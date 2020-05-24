@@ -1,56 +1,65 @@
 import { playerInteractionMenu } from 'modules/menu';
 import { turnOnEngine, turnOffEngine } from 'modules/player/vehicles';
 
+const registeredKeys: number[] = [];
+
 // @ts-ignore
 let chatOpen = false; // eslint-disable-line
 
-const unBindKeys = (): void => {
-  //unbind keys
-  for (let i = 0x01; i < 0xFE; i++) {
-    if(i == 0x0D) { continue; }
-    mp.keys.unbind(i, true);
+const registerKeyBinding = (keyCode: number, handler: Function, keyHold = true): void => {
+  registeredKeys.push(keyCode);
+  mp.keys.bind(keyCode, keyHold, handler);
+}
+
+const unBindAllKeys = (): void => {
+  //unbind keys,
+  for (let i = 0; i < registeredKeys.length ; i++) {
+    mp.keys.unbind(registeredKeys[i], true);
   }
+  registeredKeys.length = 0;
 };
 
-const bindKeys = (): void => {
-
-  mp.keys.bind(0x24, true, function () { // Home Key
+const bindRegisteredKeys = (): void => {
+  registerKeyBinding(KeyCode.Home, function () {  
     mp.players.local.vehicle && turnOnEngine(mp.players.local.vehicle);
   });
-
-  mp.keys.bind(0x23, true, function () { // End Key
+  
+  registerKeyBinding(KeyCode.End, function () {
     mp.players.local.vehicle && turnOffEngine(mp.players.local.vehicle);
   });
 
-  mp.keys.bind(0x4D, true, function () { //M Key
+  registerKeyBinding(KeyCode.M, function () {
     if (playerInteractionMenu.Visible) { playerInteractionMenu.Close(); } else { playerInteractionMenu.Open(); }
   });
 
-  mp.keys.bind(0x4E, true, function () { // N Key
-    const player = mp.players.local;
-    const vehicle = mp.vehicles.new(mp.game.joaat('minivan'), new mp.Vector3(player.position.x + 2, player.position.y, player.position.z + 2));
-    
-    setTimeout(()=> {
-      vehicle.setEngineHealth(400);
-      vehicle.setBodyHealth(0);
-    }, 1000);
-    
-    mp.gui.chat.push(`${vehicle.id} has spawned!`);
+  registerKeyBinding(KeyCode.N, function () {
+    //spawn vehicle from server
+    mp.events.callRemote('spawn_vehicle');
   });
 
-  mp.keys.bind(0x54, true, function () { // T Key
+  registerKeyBinding(KeyCode.LeftArrow, function () {
+    mp.events.callRemote('change_prev_ped');
+  });
+
+  registerKeyBinding(KeyCode.RightArrow, function () {
+    mp.events.callRemote('change_next_ped');
+  });
+  
+  registerKeyBinding(KeyCode.T, function () { 
     chatOpen = true;
-    unBindKeys();
+    unBindAllKeys();
   });
 
 };
 
-mp.keys.bind(0x0D, true, function () { // Enter Key
+mp.keys.bind(KeyCode.Enter, true, function () {
+  mp.gui.chat.push(registeredKeys.length.toString());
+  if(chatOpen) {
+    bindRegisteredKeys();
+  }
   chatOpen = false;
-  bindKeys();
 });
 
-// Enter Key 0x0D T Key 0x54
-export const registerKeyBinding = (): void => {
-  bindKeys();
+export const BindAllKeys = (): void => {
+  bindRegisteredKeys();
 };

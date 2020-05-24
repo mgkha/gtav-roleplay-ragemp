@@ -24,6 +24,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/dotenv": "^6.1.1",
     "@types/glob": "^7.1.1",
+    "@types/keycode": "github:mg-kg/types-keycode#master",
     "@types/mongoose": "^5.5.12",
     "@types/node": "^12.7.1",
     "@types/ragemp-c": "github:CocaColaBear/types-ragemp-c#master",
