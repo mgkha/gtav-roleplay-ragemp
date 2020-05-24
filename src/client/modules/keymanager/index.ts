@@ -4,12 +4,12 @@ import { turnOnEngine, turnOffEngine } from 'modules/player/vehicles';
 const registeredKeys: number[] = [];
 
 // @ts-ignore
-let chatOpen = false; // eslint-disable-line
+let chatOpen = false;
 
 const registerKeyBinding = (keyCode: number, handler: Function, keyHold = true): void => {
   registeredKeys.push(keyCode);
   mp.keys.bind(keyCode, keyHold, handler);
-}
+};
 
 const unBindAllKeys = (): void => {
   //unbind keys,

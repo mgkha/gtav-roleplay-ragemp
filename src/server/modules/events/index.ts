@@ -12,12 +12,12 @@ mp.events.add('playerReady', (player: PlayerMp) => {
 mp.events.add('playerLogin', (player: PlayerMp) => {
   player.position = new mp.Vector3(100, 100, 80);
   //change naked
-  // player.setClothes(RageEnums.ClothesComponent.TORSO, 15, 0, 0); // eslint-disable-line
-  // player.setClothes(RageEnums.ClothesComponent.ACCESSORIES_1, 15, 0, 0); // eslint-disable-line
-  // player.setClothes(RageEnums.ClothesComponent.DECALS, 15, 0, 0); // eslint-disable-line
+  // player.setClothes(RageEnums.ClothesComponent.TORSO, 15, 0, 0);
+  // player.setClothes(RageEnums.ClothesComponent.ACCESSORIES_1, 15, 0, 0);
+  // player.setClothes(RageEnums.ClothesComponent.DECALS, 15, 0, 0);
 
-  // player.setClothes(RageEnums.ClothesComponent.LEGS, 21, 0, 0); // eslint-disable-line
-  // player.setClothes(RageEnums.ClothesComponent.FOOT, 34, 0, 0); // eslint-disable-line
+  // player.setClothes(RageEnums.ClothesComponent.LEGS, 21, 0, 0);
+  // player.setClothes(RageEnums.ClothesComponent.FOOT, 34, 0, 0);
   
   player.model = mp.joaat('s_f_y_cop_01');
 

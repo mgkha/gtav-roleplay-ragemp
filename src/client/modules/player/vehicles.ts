@@ -1,6 +1,6 @@
 const PlayerVehicleStates: [VehicleMp, boolean][] = [];
 
-mp.events.add(RageEnums.EventKey.RENDER, () => { // eslint-disable-line
+mp.events.add(RageEnums.EventKey.RENDER, () => { 
   PlayerVehicleStates.forEach(el => {
     el[0].setEngineOn(el[1], true, true);
   });

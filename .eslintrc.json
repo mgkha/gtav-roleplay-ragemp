@@ -23,6 +23,8 @@
   },
   "rules": {
     "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/camelcase": "off",
+    "no-undef": "off",
     "indent": "off",
     "@typescript-eslint/indent": [
       "error",
