@@ -22,28 +22,28 @@
   "author": "kgkg",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "@types/dotenv": "^6.1.1",
+    "@types/dotenv": "^8.2.0",
     "@types/glob": "^7.1.1",
     "@types/keycode": "github:mg-kg/types-keycode#master",
-    "@types/mongoose": "^5.5.12",
-    "@types/node": "^12.7.1",
+    "@types/mongoose": "^5.7.21",
+    "@types/node": "^14.0.5",
     "@types/ragemp-c": "github:CocaColaBear/types-ragemp-c#master",
     "@types/ragemp-s": "github:CocaColaBear/types-ragemp-s#master",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
-    "eslint": "^6.1.0",
-    "eslint-plugin-json": "^1.4.0",
-    "husky": "^3.0.3",
-    "nodemon": "^1.19.1",
-    "rimraf": "^2.7.1",
-    "typescript": "^3.5.3"
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
+    "eslint": "^7.1.0",
+    "eslint-plugin-json": "^2.1.1",
+    "husky": "^4.2.5",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.3"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "dotenv": "^8.0.0",
-    "i18next": "^17.0.11",
-    "log4js": "^5.0.0",
-    "mongoose": "^5.7.5",
+    "dotenv": "^8.2.0",
+    "i18next": "^19.4.4",
+    "log4js": "^6.2.1",
+    "mongoose": "^5.9.15",
     "ncp": "^2.0.0"
   },
   "nodemonConfig": {
@@ -56,5 +56,9 @@
     "ignore": [
       "client_packages/modules/authentication/form/*"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mg-kg/gtav-roleplay-ragemp.git"
   }
 }
