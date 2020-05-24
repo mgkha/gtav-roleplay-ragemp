@@ -16,7 +16,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run type-check && npm run lint"
+      "pre-commit": "npm run type-check && npm run lint"
     }
   },
   "author": "kgkg",
@@ -36,7 +36,7 @@
     "husky": "^4.2.5",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
-    "typescript": "^3.9.3"
+    "typescript": "^3.8.0"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
