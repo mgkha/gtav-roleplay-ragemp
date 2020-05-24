@@ -1,6 +1,5 @@
 /* eslint-disable no-dupe-class-members */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/interface-name-prefix */
 declare module 'plugins/nativeui' {
   export enum BadgeStyle {
     None,
