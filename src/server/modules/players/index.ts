@@ -1,4 +1,5 @@
-import { PedHashes } from './peds';
+// import { PedHashes } from './peds';
+const PedHashes = require('./peds');
 
 mp.events.add('spawn_vehicle', (player: PlayerMp) => {
   const vehicle = mp.vehicles.new(mp.joaat('police3'), new mp.Vector3(player.position.x + 3, player.position.y + 3, player.position.z + 3));
