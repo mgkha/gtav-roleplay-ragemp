@@ -2,28 +2,28 @@
 node_modules
 
 # compiled files
-packages/
-client_packages/
+/packages
+/client_packages
 
 # test coverage
-coverage/
+/coverage
 
 # log files
-logs/
+/logs
 
 # environment variables, never commit this file
-.env
+/.env
 
 # ragemp files and folders
-bin/
-dotnet/
-maps/
-plugins/
-BugTrap-x64.dll
-conf.json
-linux_x64.tar.gz
-ragemp-server.exe
+/bin
+/dotnet
+/maps
+/plugins
+/BugTrap-x64.dll
+/conf.json
+/linux_x64.tar.gz
+/ragemp-server.exe
 
 #linux version
-./bt.dat
-./server
+/bt.dat
+/server
