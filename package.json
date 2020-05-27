@@ -12,7 +12,7 @@
     "build": "npm run clean && npm run build-server && npm run build-client",
     "lint": "eslint . --ext .ts",
     "type-check": "cd src/server/ && tsc --noEmit && cd ../client/ && tsc --noEmit",
-    "copy-client": "ncp src/client/modules/authentication/form client_packages/modules/authentication/form"
+    "copy-client": "ncp src/client/modules/authentication/form client_packages/modules/authentication/form && ncp src/client/modules/character/form client_packages/modules/character/form"
   },
   "husky": {
     "hooks": {
@@ -54,7 +54,8 @@
     ],
     "exec": "npm run copy-client && ragemp-server.exe",
     "ignore": [
-      "client_packages/modules/authentication/form/*"
+      "client_packages/modules/authentication/form/*",
+      "client_packages/modules/character/form/*"
     ]
   },
   "repository": {

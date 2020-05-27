@@ -1,4 +1,5 @@
 import User from '../../models/user.model';
+import Character from '../../models/character.model';
 
 mp.events.add('playerJoin', (player: PlayerMp) => {
   console.log('playerJoin');
@@ -9,19 +10,42 @@ mp.events.add('playerReady', (player: PlayerMp) => {
   console.log(`Player - ${player.id} is ready!`);
 });
 
-mp.events.add('playerLogin', (player: PlayerMp) => {
-  player.position = new mp.Vector3(100, 100, 80);
-  //change naked
-  player.setClothes(RageEnums.ClothesComponent.TORSO, 15, 0, 0);
-  player.setClothes(RageEnums.ClothesComponent.ACCESSORIES_1, 15, 0, 0);
-  player.setClothes(RageEnums.ClothesComponent.DECALS, 15, 0, 0);
-
-  player.setClothes(RageEnums.ClothesComponent.LEGS, 21, 0, 0);
-  player.setClothes(RageEnums.ClothesComponent.FOOT, 34, 0, 0);
+mp.events.add('playerLoggedin', async (player: PlayerMp) => {
+  player.call('disablePlayer', [true]);
   
-  // player.model = mp.joaat('s_f_y_cop_01');
+  const char = await Character.findOne({ serial: player.serial });
+  if(char) {
+    player.position = new mp.Vector3(char.stats.position[0], char.stats.position[1], char.stats.position[2]);
+    player.setCustomization(!!char.gender, 
+      char.components.shapeFirst, 
+      char.components.shapeSecond, 
+      char.components.shapeThird, 
+      char.components.skinFirst, 
+      char.components.skinSecond, 
+      char.components.skinThird, 
+      char.components.shapeMix, 
+      char.components.skinMix, 
+      char.components.thirdMix, 
+      char.components.eyeColor, 
+      char.components.hairColor, 
+      char.components.hightlightColor, []
+      );
+    player.setClothes(2, char.components.hairStyle, 0, 0);
 
-  player.call('enterCharacterCreation');
+    console.log(`Player - ${player.id} has spawned!`);
+    player.call('enablePlayer');
+  }
+  else {
+    player.call('enterCharacterCreation');
+  }
+  //change naked
+  // player.setClothes(RageEnums.ClothesComponent.TORSO, 15, 0, 0);
+  // player.setClothes(RageEnums.ClothesComponent.ACCESSORIES_1, 15, 0, 0);
+  // player.setClothes(RageEnums.ClothesComponent.DECALS, 15, 0, 0);
+
+  // player.setClothes(RageEnums.ClothesComponent.LEGS, 21, 0, 0);
+  // player.setClothes(RageEnums.ClothesComponent.FOOT, 34, 0, 0);
+
 });
 
 interface PlayerLooks {
@@ -45,8 +69,37 @@ let customizeData: PlayerLooks = {
   hairStyle: 0
 }
 
-
-mp.events.add('setCustomization', (player: PlayerMp, name, value) => {
+mp.events.add('setCustomization', async (player: PlayerMp, name, value) => {
+  if(name === 'save') {
+    const char = new Character();
+    char.serial = player.serial;
+    char.socialClub = player.socialClub;
+    char.name = 'name here';
+    char.gender = customizeData.gender;
+    char.stats = {
+      position: [100,100, 80],
+      hunger: 100,
+      thirst: 100
+    }
+    char.components = {
+      shapeFirst: customizeData.shapeFirst, 
+      shapeSecond: customizeData.shapeSecond, 
+      shapeThird: customizeData.shapeThird, 
+      skinFirst: customizeData.skinFirst, 
+      skinSecond: customizeData.skinSecond, 
+      skinThird: customizeData.skinThird, 
+      shapeMix: customizeData.shapeMix, 
+      skinMix: customizeData.skinMix, 
+      thirdMix: customizeData.thirdMix, 
+      eyeColor: customizeData.eyeColor, 
+      hairColor: customizeData.hairColor, 
+      hightlightColor: customizeData.hightlightColor,
+      hairStyle: customizeData.hairStyle
+    };
+    await char.save();
+    player.position = new mp.Vector3(100, 100, 80);
+    player.call('enablePlayer');
+  }
   console.log(`${name} ${value}`);
   customizeData[name] = Number(value);
 
@@ -67,8 +120,15 @@ mp.events.add('setCustomization', (player: PlayerMp, name, value) => {
   player.setClothes(2, customizeData.hairStyle, 0, 0);
 });
 
-mp.events.add('playerSpawn', (player: PlayerMp) => {
-  console.log(`Player - ${player.id} has spawned!`);
+mp.events.add('playerSpawn', async (player: PlayerMp) => {
+  const char = await Character.findOne({ serial: player.serial });
+  if(char) {
+    player.position = new mp.Vector3(char.stats.position[0], char.stats.position[1], char.stats.position[2]);
+    console.log(`Player - ${player.id} has spawned!`);
+  }
+  else {
+    player.outputChatBox('~b~Error! Cannot Spawn Character');
+  }
 });
 
 mp.events.add('playerDeath', (player: PlayerMp) => {
@@ -84,9 +144,10 @@ mp.events.add('register', async (player: PlayerMp, name, email, password, invite
   try {
     const user = new User();
     user.name = name;
-    user.gender = true;
     user.email = email;
     user.password = password;
+    user.serial = player.serial;
+    user.socialClub = player.socialClub;
     await user.save();
     player.call('clientAuthHandler', ['register_success']);
   }

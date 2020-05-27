@@ -1,6 +1,6 @@
 import { hideHudElements } from 'utils/hud';
 import { registerVehicle } from 'modules/player/vehicles';
-import { BindAllKeys } from 'modules/keymanager';
+import { BindAllKeys, unBindAllKeys } from 'modules/keymanager';
 
 let lastVehicle: VehicleMp;
 
@@ -13,23 +13,46 @@ mp.events.add('clientLaunched', (): void => {
 });
 
 mp.events.add('authenticated', (): void => {
-  //enable player
-  mp.players.local.freezePosition(false);
-  mp.players.local.setAlpha(255);
-  mp.gui.chat.activate(true);
-  mp.game.ui.displayRadar(true);
-  mp.gui.cursor.show(false, false);
-
-  mp.events.callRemote('playerLogin');
+  mp.events.callRemote('playerLoggedin');
   BindAllKeys();
+});
+
+mp.events.add('enablePlayer', (invisible: boolean = false): void => {
+  //enable player
+  if (invisible) {
+    mp.players.local.setAlpha(0);
+  }
+  else {
+    mp.players.local.setAlpha(255);
+  }
+  mp.players.local.freezePosition(false);
+  mp.gui.chat.activate(true);
+  mp.gui.chat.show(true);
+  mp.game.ui.displayRadar(true);
+  mp.game.ui.displayHud(true);
+  mp.gui.cursor.show(false, false);
+  BindAllKeys();
+});
+
+mp.events.add('disablePlayer', (invisible: boolean = false): void => {
+  //disable player
+  if (invisible) {
+    mp.players.local.setAlpha(0);
+  }
+  else {
+    mp.players.local.setAlpha(255);
+  }
+  mp.players.local.freezePosition(true);
+  mp.gui.chat.activate(false);
+  mp.gui.chat.show(false);
+  mp.game.ui.displayRadar(false);
+  mp.game.ui.displayHud(false);
+  mp.gui.cursor.show(true, true);
+  unBindAllKeys();
 });
 
 mp.events.add('playerReady', () => {
   mp.gui.chat.push('I am Ready!');
-});
-
-mp.events.add('IncomingDamage', () => {
-  mp.gui.chat.push('IncomingDamage');
 });
 
 mp.events.add('enterCharacterCreation', () => {
@@ -37,8 +60,6 @@ mp.events.add('enterCharacterCreation', () => {
 
   mp.events.call('characterCreator');
 });
-
-
 
 mp.events.add('playerEnterVehicle', (vehicle: VehicleMp) => {
   lastVehicle = vehicle;

@@ -5,20 +5,18 @@ export interface User extends mongoose.Document {
   comparePassword(password: string): boolean;
 
   name: string;
-  age: number;
-  gender: boolean;
-  money: BigInteger;
   email: string;
   password: string;
+  serial: string;
+  socialClub: string;
 }
 
 export const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  gender: { type: Boolean, required: true },
-  age: { type: Number, required: true, default: 17 },
-  money: { type: Number, required: true, default: 0 },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  serial: { type: String, required: true },
+  socialClub: { type: String, required: true },
 }, {
   timestamps: true,
 });

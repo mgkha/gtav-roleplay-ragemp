@@ -4,35 +4,105 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <style href="./style.css"></style>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  
 </head>   
-<body>
-  <div style="background: rgba(0,0,0,0); margin-top: 200px; float: right; width: 300px;">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-dark">
-        <input type="range" class="form-control-range" id="range1" step=1>
-      </li>
-      <li class="list-group-item">
-        <input type="range" class="form-control-range" id="range2">
-      </li>
-      <li class="list-group-item">
-        <input type="range" class="form-control-range" id="range3">
-      </li>
-      <li class="list-group-item">
-        <input type="range" class="form-control-range" id="range4">
-      </li>
-    </ul> 
+<body style="background-color: rgba(0, 0, 0, 0); margin-top: 100px; margin-right: 50px; float: right;">
+  <div class="rounded bg-secondary p-2 text-white" style="width: 500px;">
+        
+      <div class="row p-1">
+        <div class="col-sm-4"><label>Gender</label></div>
+        <div class="col-sm-8">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="male" checked>
+            <label class="form-check-label">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="female">
+            <label class="form-check-label">Female</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row p-1">
+        <div class="col-sm-4"><label>Face Shape</label></div>
+        <div class="col-sm-8"><input type="range" class="form-control-range" value="0" max="45" id="shapeFirst"></div>
+      </div>
+      
+      <div class="row p-1">
+        <div class="col-sm-4"><label>Skin</label></div>
+        <div class="col-sm-8"><input type="range" class="form-control-range" value="0" max="45" id="skinFirst"></div>
+      </div>
+    
+      <div class="row p-1">
+        <div class="col-sm-4"><label>Eyes Color</label></div>
+        <div class="col-sm-8"><input type="range" class="form-control-range" value="0" max="45" id="eyeColor"></div>
+      </div>
+      
+      <div class="row p-1">
+        <div class="col-sm-4"><label>Hair Style</label></div>
+        <div class="col-sm-8"><input type="range" class="form-control-range" value="0" max="78" id="hairStyle"></div>
+      </div>
+
+      <div class="row p-1">
+        <div class="col-sm-4"><label>Hair Color</label></div>
+        <div class="col-sm-8"><input type="range" class="form-control-range" value="0" max="45" id="hairColor"></div>
+      </div>
+      <div class="row p-1">
+        <div class="col-sm-4"><label>Hightlight</label></div>
+        <div class="col-sm-8"><input type="range" class="form-control-range" value="0" max="45" id="hightlightColor"></div>
+      </div>
+
+      <div class="row p-1">
+        <div class="ml-auto mr-3">
+          <button class="btn btn-primary" id="save">Save</button>
+          <button class="btn btn-success" id="reset">Reset</button>
+        </div>
+      </div>
+      
   </div>
   
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
   <script>
+    
     $(document).ready(() => {
-    $('#range1').change(()=> {
-      $('#lbl1-start').text($('#range1').val());
-    });
+      $('#shapeFirst').change(() => {
+        mp.trigger('change', 'shapeFirst', $('#shapeFirst').val());
+      });
+      
+      $('#skinFirst').change(() => {
+        mp.trigger('change', 'skinFirst', $('#skinFirst').val());
+      });
+      
+      $('#eyeColor').change(() => {
+        mp.trigger('change', 'eyeColor', $('#eyeColor').val());
+      });
+      $('#hairColor').change(() => {
+        mp.trigger('change', 'hairColor', $('#hairColor').val());
+      });
+      $('#hightlightColor').change(() => {
+        mp.trigger('change', 'hightlightColor', $('#hightlightColor').val());
+      });
+      $('#hairStyle').change(() => {
+        mp.trigger('change', 'hairStyle', $('#hairStyle').val());
+      });
+
+
+      $('#male').change(() => {
+        mp.trigger('change', 'gender', 1);
+      })
+      $('#female').change(() => {
+        mp.trigger('change', 'gender', 0);
+      })
+
+      $('#save').click(() => {
+        mp.trigger('change', 'save', 0);
+        $('#save').prop('disabled', true);
+      })
+      $('#reset').click(() => {
+        mp.trigger('change', 'reset', 0);
+      })
     })
   </script>
 </body>

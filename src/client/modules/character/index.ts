@@ -2,27 +2,22 @@ const url = 'package://modules/character/form/index.html';
 let characterCreationBrowser = mp.browsers.new(url);
 characterCreationBrowser.active = false;
 
+const disableControls = () => {
+  for (let i = 0; i <= 33; i++) {
+    mp.game.controls.disableAllControlActions(i);
+  }
+};
 
 mp.events.add('characterCreator', () => {
-  mp.events.add(RageEnums.EventKey.RENDER, () => {
-    for (let i = 0; i <= 33; i++) {
-      mp.game.controls.disableAllControlActions(i);
-    }
-  });
+  mp.events.add(RageEnums.EventKey.RENDER, disableControls);
 
   setTimeout(() => {
     mp.players.local.setHeading(-185.0);
     mp.players.local.position = new mp.Vector3(402.8664, -996.4108, -99.00027);
-    //disable player
-    mp.players.local.freezePosition(true);
-    mp.players.local.setAlpha(255);
+    
     mp.players.local.clearTasksImmediately();
-  
-    // mp.gui.chat.activate(false);
-    // mp.gui.chat.show(false);
-    mp.game.ui.displayRadar(false);
-    mp.game.ui.displayHud(false);
-    mp.gui.cursor.show(true, true);
+    //disable player
+    mp.events.call('disablePlayer');
   
     let creatorCamera: CameraMp;
     creatorCamera = mp.cameras.new("creatorCamera", new mp.Vector3(402.8664, -997.5515, -98.5), new mp.Vector3(0, 0, 0), 45);
@@ -35,7 +30,10 @@ mp.events.add('characterCreator', () => {
 });
 
 mp.events.add('change', (name, value) => {
-  mp.gui.chat.push(`${name} ${value}`);
+  if(name == 'save') {
+    mp.game.cam.renderScriptCams(false, false, 0, true, false);
+    characterCreationBrowser.active = false;
+    mp.events.remove(RageEnums.EventKey.RENDER, disableControls);
+  }
   mp.events.callRemote('setCustomization', name, value);
-  
 });

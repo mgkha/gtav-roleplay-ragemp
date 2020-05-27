@@ -11,7 +11,7 @@ const registerKeyBinding = (keyCode: number, handler: Function, keyHold = true):
   mp.keys.bind(keyCode, keyHold, handler);
 };
 
-const unBindAllKeys = (): void => {
+const unBindRegisteredKeys = (): void => {
   //unbind keys,
   for (let i = 0; i < registeredKeys.length ; i++) {
     mp.keys.unbind(registeredKeys[i], true);
@@ -47,7 +47,7 @@ const bindRegisteredKeys = (): void => {
   
   registerKeyBinding(KeyCode.T, function () { 
     chatOpen = true;
-    unBindAllKeys();
+    unBindRegisteredKeys();
   });
 
 };
@@ -61,4 +61,8 @@ mp.keys.bind(KeyCode.Enter, true, function () {
 
 export const BindAllKeys = (): void => {
   bindRegisteredKeys();
+};
+
+export const unBindAllKeys = (): void => {
+  unBindRegisteredKeys();
 };
