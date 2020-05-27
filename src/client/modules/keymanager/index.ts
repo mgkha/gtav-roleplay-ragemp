@@ -37,13 +37,13 @@ const bindRegisteredKeys = (): void => {
     mp.events.callRemote('spawn_vehicle');
   });
 
-  registerKeyBinding(KeyCode.LeftArrow, function () {
-    mp.events.callRemote('change_prev_ped');
-  });
+  // registerKeyBinding(KeyCode.LeftArrow, function () {
+  //   mp.events.callRemote('change_prev_ped');
+  // });
 
-  registerKeyBinding(KeyCode.RightArrow, function () {
-    mp.events.callRemote('change_next_ped');
-  });
+  // registerKeyBinding(KeyCode.RightArrow, function () {
+  //   mp.events.callRemote('change_next_ped');
+  // });
   
   registerKeyBinding(KeyCode.T, function () { 
     chatOpen = true;
@@ -53,7 +53,6 @@ const bindRegisteredKeys = (): void => {
 };
 
 mp.keys.bind(KeyCode.Enter, true, function () {
-  mp.gui.chat.push(registeredKeys.length.toString());
   if(chatOpen) {
     bindRegisteredKeys();
   }
