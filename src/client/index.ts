@@ -11,6 +11,7 @@ import 'lib/spot';
 /**
  * Modules
  */
+import 'modules/mapeditor';
 import 'modules/authentication';
 import 'modules/character';
 import 'modules/player';
