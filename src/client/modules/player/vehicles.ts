@@ -8,7 +8,7 @@ mp.events.add(RageEnums.EventKey.RENDER, () => {
 
 mp.events.add('spawn_vehicle', (vehicle: VehicleMp) => {
   setTimeout(() => {
-    vehicle.setEngineHealth(400);
+    vehicle.setEngineHealth(1000);
     vehicle.setBodyHealth(0);
   }, 1000);
 });

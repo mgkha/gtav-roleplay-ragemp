@@ -9,13 +9,7 @@ mp.events.add('authenticate', () => {
     mp.players.local.position = new mp.Vector3(550, 800, 400);
 
     //disable player
-    mp.players.local.freezePosition(true);
-    mp.players.local.setAlpha(0);
-    mp.game.ui.displayRadar(false);
-    mp.game.ui.displayHud(false);
-    mp.gui.chat.activate(false);
-    mp.gui.chat.show(false);
-    mp.gui.cursor.show(true, true);
+    mp.events.call('disablePlayer', [true]);
     
   }, 1);
 });

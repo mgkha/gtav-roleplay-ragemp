@@ -8,13 +8,12 @@ mp.events.add('clientLaunched', (): void => {
   hideHudElements([1, 3]);
   mp.discord.update('GTAV Roleplay', 'A Developer');
   mp.gui.chat.push('Please login to enter the world!');
-  // mp.events.call('authenticate');
-  mp.events.call('authenticated');
+  mp.events.call('authenticate');
+  // mp.events.call('authenticated');
 });
 
 mp.events.add('authenticated', (): void => {
   mp.events.callRemote('playerLoggedin');
-  BindAllKeys();
 });
 
 mp.events.add('enablePlayer', (invisible: boolean = false): void => {
